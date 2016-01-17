@@ -38,7 +38,7 @@ project(':server'){
   }
   
   task run(type:JavaExec){
-    main='mx.ipn.dsd.Main'
+    main='mx.ipn.dsd.Server'
     classpath sourceSets.main.runtimeClasspath 
     jvmArgs = ['-Djava.security.policy=server.policy',
                '-Djava.rmi.server.hostname=mx.ipn.dsd'] 
