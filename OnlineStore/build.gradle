@@ -5,7 +5,8 @@ allprojects{
 ext{
   groovyVersion = '2.4.5'
   springVersion = '4.2.4.RELEASE'
-  springPackage = 'org.springframework'
+  springGroup = 'org.springframework'
+  modulesExcluded = ['spring-orm','spring-context','spring-aop','spring-tx','spring-beans','spring-core']
 }
 
 subprojects{
@@ -17,8 +18,14 @@ subprojects{
   dependencies{
     compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
     testCompile "org.codehaus.groovy:groovy:${groovyVersion}" 
-    compile "$springPackage:spring-core:$springVersion"
-    compile "$springPackage:spring-context:$springVersion"
+    compile "$springGroup:spring-core:$springVersion"
+    compile "$springGroup:spring-context:$springVersion"
+    compile "$springGroup:spring-orm:$springVersion"
+    compile("${springGroup}.data:spring-data-jpa:1.9.2.RELEASE"){
+      modulesExcluded.each{ module ->
+        exclude module:module
+      }
+    }
     compile "org.hibernate:hibernate-entitymanager:4.3.1.Final"
   }
 }
