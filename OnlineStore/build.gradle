@@ -1,0 +1,38 @@
+ext{
+  groovyVersion = '2.4.5'
+}
+
+allprojects{
+  apply plugin:'groovy'
+}
+
+subprojects{
+  repositories{
+    mavenCentral()
+    jcenter()
+  }
+
+  dependencies{
+    compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    testCompile "org.codehaus.groovy:groovy:${groovyVersion}" 
+    compile "org.hibernate:hibernate-entitymanager:4.3.1.Final"
+  }
+}
+
+
+project(':server'){
+  dependencies{
+    compile project(':api')
+  }
+  
+  task run(type:JavaExec){
+    main='mx.ipn.dsd.Main'
+    classpath sourceSets.main.runtimeClasspath 
+  }
+}
+
+project(':api'){
+  dependencies{
+    compile project(':remote')
+  }
+}
