@@ -27,6 +27,7 @@ subprojects{
 project(':server'){
   dependencies{
     compile project(':api')
+    compile "com.zaxxer:HikariCP-java6:2.3.12"
   }
   
   task run(type:JavaExec){
