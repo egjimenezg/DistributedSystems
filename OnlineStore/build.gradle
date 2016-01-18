@@ -35,18 +35,31 @@ project(':server'){
   dependencies{
     compile project(':api')
     compile "com.zaxxer:HikariCP-java6:2.3.12"
+    compile "mysql:mysql-connector-java:5.1.38"
   }
   
   task run(type:JavaExec){
     main='mx.ipn.dsd.Server'
     classpath sourceSets.main.runtimeClasspath 
-    jvmArgs = ['-Djava.security.policy=server.policy',
-               '-Djava.rmi.server.hostname=mx.ipn.dsd'] 
+    jvmArgs = ['-Djava.security.policy=server.policy']
   }
 }
 
 project(':api'){
   dependencies{
     compile project(':remote')
+  }
+}
+
+project(':client'){
+  
+  dependencies{
+    compile project(':api')
+  }
+
+  task run(type:JavaExec){
+    main='mx.ipn.dsd.Client'
+    classpath sourceSets.main.runtimeClasspath 
+    jvmArgs = ['-Djava.security.policy=client.policy']
   }
 }

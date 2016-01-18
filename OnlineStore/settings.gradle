@@ -1,1 +1,1 @@
-include 'api','server','remote'
+include 'api','server','remote','client'
