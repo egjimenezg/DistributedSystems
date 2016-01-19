@@ -4,17 +4,20 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import org.springframework.transaction.annotation.EnableTransactionManagement
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean
 import org.springframework.orm.jpa.JpaVendorAdapter
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-
 import static org.springframework.orm.jpa.vendor.Database.MYSQL
+import org.springframework.transaction.PlatformTransactionManager
+import org.springframework.orm.jpa.JpaTransactionManager
 import javax.sql.DataSource
 
 @Configuration
 @EnableJpaRepositories("mx.ipn.dsd.repository")
+@EnableTransactionManagement(proxyTargetClass=true)
 class DataSourceConfig{
 
   @Bean
@@ -33,16 +36,21 @@ class DataSourceConfig{
     hibernateJpaVendorAdapter.setShowSql(false)
     hibernateJpaVendorAdapter.setGenerateDdl(false)
     hibernateJpaVendorAdapter.setDatabase(MYSQL)
-    hibernateJpaVendorAdapter 
+    hibernateJpaVendorAdapter
   }
-  
+
   @Bean
   LocalContainerEntityManagerFactoryBean entityManagerFactory(Environment env){
     LocalContainerEntityManagerFactoryBean localContainer = new LocalContainerEntityManagerFactoryBean()
     localContainer.setDataSource(dataSource(env))
-    localContainer.setJpaVendorAdapter(jpaVendorAdapter()) 
+    localContainer.setJpaVendorAdapter(jpaVendorAdapter())
     localContainer.setPackagesToScan("mx.ipn.dsd.domain")
     localContainer
   }
-  
+
+  @Bean
+  PlatformTransactionManager transactionManager(Environment env){
+    new JpaTransactionManager(entityManagerFactory:entityManagerFactory(env).getObject()) 
+  }
+
 }
