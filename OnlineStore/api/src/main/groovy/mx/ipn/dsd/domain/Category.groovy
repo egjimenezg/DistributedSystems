@@ -4,18 +4,18 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
-import javax.persistence.OneToMany
-import mx.ipn.dsd.model.ProductInterface
+import javax.persistence.ManyToOne
+import javax.persistence.JoinColumn
+
+import mx.ipn.dsd.model.CategoryInterface
 
 @Entity
-class Product implements Serializable, ProductInterface{
+class Category implements Serializable,CategoryInterface{
 
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
   Long id
-  Integer existence
   String name
   String description
-  BigDecimal cost
-  
+
 }
