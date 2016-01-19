@@ -1,7 +1,7 @@
 package mx.ipn.dsd.model
 
 interface CategoryInterface{
-  Integer getId()
+  Long getId()
   String getName()
   String getDescription()
 }
